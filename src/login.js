@@ -1,63 +1,59 @@
 import React, { useState, useContext } from 'react';
+import './LoginForm.css';
 
-// Create the ThemeContext
+// ThemeContext
 const ThemeContext = React.createContext();
 
 // LoginForm component
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState('');
+  const [theme, setTheme] = useState('light');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setErrorMessage('Please enter both email and password.');
+    if (email === '' || password === '') {
+      setError('Please fill in all fields.');
     } else {
-      setErrorMessage('');
-      // Perform login logic here
+      // Perform login or further processing
+      // Here, we'll just clear the form inputs
+      setEmail('');
+      setPassword('');
+      setError('');
     }
   };
 
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
   return (
-    <ThemeContext.Consumer>
-      {(theme) => (
+    <ThemeContext.Provider value={theme}>
+      <div className={`login-form ${theme}`}>
+        <button onClick={toggleTheme} className="theme-button">
+          Toggle Theme
+        </button>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={{ backgroundColor: theme.background, color: theme.color }}
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ backgroundColor: theme.background, color: theme.color }}
           />
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-          <button type="submit">Login</button>
+          {error && <p className="error">{error}</p>}
+          <button type="submit">Submit</button>
         </form>
-      )}
-    </ThemeContext.Consumer>
-  );
-};
-
-// Example usage
-const App = () => {
-  const theme = {
-    background: 'white',
-    color: 'black',
-  };
-
-  return (
-    <ThemeContext.Provider value={theme}>
-      <LoginForm />
+      </div>
     </ThemeContext.Provider>
   );
 };
 
-export default App;
+export default LoginForm;
