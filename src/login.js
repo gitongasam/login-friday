@@ -32,25 +32,28 @@ const LoginForm = () => {
   return (
     <ThemeContext.Provider value={theme}>
       <div className={`login-form ${theme}`}>
-        <button onClick={toggleTheme} className="theme-button">
-          Toggle Theme
-        </button>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {error && <p className="error">{error}</p>}
-          <button type="submit">Submit</button>
-        </form>
+        <div className="login-form-content">
+          <button onClick={toggleTheme} className="theme-button">
+            Toggle Theme
+          </button>
+          <h2>Login to your account</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && <p className="error">{error}</p>}
+            <button type="submit">Submit</button>
+          </form>
+        </div>
       </div>
     </ThemeContext.Provider>
   );
